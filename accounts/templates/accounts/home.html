@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align:center; margin-top:100px;">
+    <h1>Welcome to WorkNest</h1>
+    <p>Find the best freelance jobs or hire top talent!</p>
+    <a href="{% url 'login' %}">
+        <button style="padding:10px 20px;">Get Started</button>
+    </a>
+</div>
+{% endblock %}

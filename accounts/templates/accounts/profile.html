@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div style="max-width:500px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:8px; background:#1e293b; color:white;">
+
+    <h2 style="text-align:center; margin-bottom:20px;">Complete Your Profile</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username</label>
+        <input type="text" value="{{ request.user.username }}" readonly style="width:100%; padding:8px; margin-bottom:15px;">
+
+        <label>Email</label>
+        <input type="email" value="{{ request.user.email }}" readonly style="width:100%; padding:8px; margin-bottom:15px;">
+
+        <label>Select Your Role</label>
+        <select name="role" required style="width:100%; padding:8px; margin-bottom:20px;">
+            <option value="">Choose Role</option>
+            <option value="client" {% if profile.role == "client" %}selected{% endif %}>Client</option>
+            <option value="freelancer" {% if profile.role == "freelancer" %}selected{% endif %}>Freelancer</option>
+        </select>
+
+        <button type="submit" style="width:100%; padding:10px; background:#0ea5e9; color:white; border:none; border-radius:5px;">Save & Continue</button>
+    </form>
+</div>
+{% endblock %}

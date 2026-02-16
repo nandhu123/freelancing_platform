@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}WorkNest{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin:0; }
+        .content { max-width: 800px; margin: 40px auto; padding: 20px; background: white; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
