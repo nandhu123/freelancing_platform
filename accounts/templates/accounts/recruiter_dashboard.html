@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% block title %}Recruiter Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* ===== PAGE LAYOUT ===== */
+
+.dashboard-container{
+display:flex;
+min-height:100vh;
+background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+color:white;
+font-family:Segoe UI;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+width:250px;
+padding:30px 20px;
+background:linear-gradient(180deg,#020617,#0f172a);
+box-shadow:5px 0 25px rgba(0,0,0,0.5);
+display:flex;
+flex-direction:column;
+}
+
+.logo{
+text-align:center;
+color:#22d3ee;
+margin-bottom:30px;
+font-size:22px;
+}
+
+/* MENU */
+
+.menu{
+padding:12px 16px;
+margin-bottom:10px;
+border-radius:10px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+display:block;
+font-weight:500;
+}
+
+.menu:hover{
+background:#1e293b;
+transform:translateX(6px);
+}
+
+.active{
+background:linear-gradient(135deg,#6366f1,#8b5cf6);
+}
+
+.logout{
+margin-top:auto;
+background:#ef4444;
+}
+
+.logout:hover{
+background:#dc2626;
+}
+
+/* ===== MAIN CONTENT ===== */
+
+.main{
+flex:1;
+padding:40px;
+}
+
+/* ===== ANALYTICS CARDS ===== */
+
+.analytics-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.analytics-card{
+padding:25px;
+border-radius:16px;
+font-weight:600;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.analytics-card:hover{
+transform:translateY(-5px);
+}
+
+.card1{background:linear-gradient(135deg,#6366f1,#8b5cf6);}
+.card2{background:linear-gradient(135deg,#06b6d4,#3b82f6);}
+.card3{background:linear-gradient(135deg,#10b981,#059669);}
+.card4{background:linear-gradient(135deg,#f97316,#ef4444);}
+
+.analytics-number{
+font-size:28px;
+margin-top:10px;
+}
+
+/* ===== JOB CARDS ===== */
+
+.job-card{
+padding:20px;
+border-radius:16px;
+margin-bottom:20px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+box-shadow:0 0 25px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.job-card:hover{
+transform:scale(1.02);
+}
+
+</style>
+
+
+<div class="dashboard-container">
+
+<!-- ===== SIDEBAR ===== -->
+
+<div class="sidebar">
+
+<h2 class="logo">⚡ Recruiter Panel</h2>
+
+<a href="{% url 'recruiter_dashboard' %}" class="menu active">🏠 Dashboard</a>
+
+<a href="{% url 'post_job' %}" class="menu">📢 Post Job</a>
+
+<a href="{% url 'manage_jobs' %}" class="menu">📂 Manage Jobs</a>
+
+<a href="{% url 'manage_jobs' %}" class="menu">👨‍💻 Applicants</a>
+
+
+<a href="{% url 'messages' %}" class="menu">💬 Messages</a>
+
+<a href="{% url 'payments' %}" class="menu">💳 Payments</a>
+
+<a href="{% url 'settings' %}" class="menu">⚙ Settings</a>
+
+<a href="{% url 'logout' %}" class="menu logout">🚪 Logout</a>
+
+</div>
+
+
+<!-- ===== MAIN CONTENT ===== -->
+
+<div class="main">
+
+<h1 style="color:#22d3ee;">
+Welcome Recruiter {{ request.user.username }} 👋
+</h1>
+
+<p style="opacity:0.8;margin-bottom:40px;">
+Manage jobs and hire freelancers
+</p>
+
+
+<!-- ===== ANALYTICS ===== -->
+
+<div class="analytics-grid">
+
+<div class="analytics-card card1">
+Jobs Posted
+<div class="analytics-number">{{ jobs|length }}</div>
+</div>
+
+<div class="analytics-card card2">
+Applications Received
+<div class="analytics-number">{{ applications|length }}</div>
+</div>
+
+<div class="analytics-card card3">
+Freelancers Hired
+<div class="analytics-number">{{ hired_count }}</div>
+</div>
+
+<div class="analytics-card card4">
+Active Jobs
+<div class="analytics-number">{{ active_jobs }}</div>
+</div>
+
+</div>
+
+
+<!-- ===== JOB LIST ===== -->
+
+<h2 style="margin:40px 0 20px;color:#22d3ee;">Your Posted Jobs</h2>
+
+{% for job in jobs %}
+
+<div class="job-card">
+
+<h3 style="color:#38bdf8;">{{ job.title }}</h3>
+
+<p>{{ job.description|truncatewords:20 }}</p>
+
+<p><strong>Salary: ₹{{ job.salary }}</strong></p>
+
+<small>Deadline: {{ job.deadline }}</small>
+<br><br>
+
+<a href="{% url 'view_applicants' job.id %}" style="
+padding:8px 16px;
+background:#3b82f6;
+color:white;
+border-radius:8px;
+text-decoration:none;
+">
+View Applicants
+</a>
+
+</div>
+
+{% empty %}
+
+<p>No jobs posted yet.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

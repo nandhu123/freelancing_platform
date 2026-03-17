@@ -1,0 +1,105 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block content %}
+
+<div style="padding:30px; color:white;">
+
+<!-- Header -->
+<div style="display:flex; align-items:center; gap:12px; margin-bottom:25px;">
+<a href="javascript:history.back()" style="
+text-decoration:none;
+font-size:22px;
+color:white;
+padding:6px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);">
+⬅
+</a>
+
+<h2 style="margin:0;">Wishlist Jobs</h2>
+</div>
+
+
+<div style="
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(255,0,150,0.2);
+">
+
+<h3 style="margin-bottom:20px;">Saved Jobs</h3>
+
+<table style="width:100%; border-collapse:collapse;">
+
+<thead>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.2);">
+<th style="padding:12px; text-align:left;">Job Title</th>
+<th style="padding:12px;">Client</th>
+<th style="padding:12px;">Budget</th>
+<th style="padding:12px;">Deadline</th>
+<th style="padding:12px;">Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+<td style="padding:12px;">Website Development</td>
+<td style="padding:12px;">John Doe</td>
+<td style="padding:12px;">$900</td>
+<td style="padding:12px;">12 June 2026</td>
+<td style="padding:12px;">
+<button style="
+background:#00f5ff;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;">
+Apply
+</button>
+</td>
+</tr>
+
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+<td style="padding:12px;">Mobile App UI Design</td>
+<td style="padding:12px;">Sarah Smith</td>
+<td style="padding:12px;">$700</td>
+<td style="padding:12px;">18 June 2026</td>
+<td style="padding:12px;">
+<button style="
+background:#00f5ff;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;">
+Apply
+</button>
+</td>
+</tr>
+
+<tr>
+<td style="padding:12px;">Logo Design</td>
+<td style="padding:12px;">Michael Brown</td>
+<td style="padding:12px;">$200</td>
+<td style="padding:12px;">20 June 2026</td>
+<td style="padding:12px;">
+<button style="
+background:#00f5ff;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;">
+Apply
+</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,15 +1,198 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}WorkNest{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin:0; }
-        .content { max-width: 800px; margin: 40px auto; padding: 20px; background: white; border-radius: 8px; }
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f1f5f9;
+        }
+
+        /* Floating neon background circles */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        body::before {
+            background: #ff6b6b;
+            top: -100px;
+            right: -100px;
+        }
+
+        body::after {
+            background: #22d3ee;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-card {
+            width: 450px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b6b, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border: 1px solid #22d3ee;
+            box-shadow: 0 0 10px #22d3ee88;
+        }
+
+        .btn-3d {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(145deg, #ff6b6b, #22d3ee);
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link a {
+            color: #22d3ee;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-container {
+            padding: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #22d3ee;
+        }
+
+        nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(15,23,42,0.8);
+        }
+
+        nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #22d3ee;
+        }
     </style>
 </head>
+
 <body>
-    <div class="content">
-        {% block content %}{% endblock %}
+
+<nav>
+    <div><b>FreelanceHub</b></div>
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'find_jobs' %}">Jobs</a>
+        <a href="{% url 'logout' %}">Logout</a>
     </div>
+</nav>
+
+{% if messages %}
+{% for message in messages %}
+
+<div style="
+background:#22c55e;
+color:white;
+padding:12px;
+margin:20px;
+border-radius:8px;
+text-align:center;
+font-weight:600;
+">
+{{ message }}
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% block content %}{% endblock %}
+
 </body>
-</html>
+
+

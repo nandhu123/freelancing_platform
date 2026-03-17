@@ -1,29 +1,116 @@
 {% extends "base.html" %}
-
-{% block title %}Profile{% endblock %}
+{% block title %}Profile Setup{% endblock %}
 
 {% block content %}
-<div style="max-width:500px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:8px; background:#1e293b; color:white;">
 
-    <h2 style="text-align:center; margin-bottom:20px;">Complete Your Profile</h2>
+<style>
 
-    <form method="POST">
-        {% csrf_token %}
+body{
+background:linear-gradient(135deg,#12002f,#020617,#0f172a);
+min-height:100vh;
+}
 
-        <label>Username</label>
-        <input type="text" value="{{ request.user.username }}" readonly style="width:100%; padding:8px; margin-bottom:15px;">
+.profile-wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:85vh;
+}
 
-        <label>Email</label>
-        <input type="email" value="{{ request.user.email }}" readonly style="width:100%; padding:8px; margin-bottom:15px;">
+.profile-card{
+width:420px;
+padding:40px;
+border-radius:18px;
+background:#1e1b4b;
+box-shadow:0 0 40px rgba(0,255,255,0.25);
+}
 
-        <label>Select Your Role</label>
-        <select name="role" required style="width:100%; padding:8px; margin-bottom:20px;">
-            <option value="">Choose Role</option>
-            <option value="client" {% if profile.role == "client" %}selected{% endif %}>Client</option>
-            <option value="freelancer" {% if profile.role == "freelancer" %}selected{% endif %}>Freelancer</option>
-        </select>
+.profile-card h2{
+text-align:center;
+color:#22d3ee;
+margin-bottom:30px;
+font-size:28px;
+letter-spacing:1px;
+}
 
-        <button type="submit" style="width:100%; padding:10px; background:#0ea5e9; color:white; border:none; border-radius:5px;">Save & Continue</button>
-    </form>
+.profile-card label{
+display:block;
+margin-bottom:6px;
+opacity:0.8;
+}
+
+.profile-card input,
+.profile-card select{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#312e81;
+color:white;
+margin-bottom:20px;
+}
+
+.profile-card input:focus,
+.profile-card select:focus{
+outline:none;
+box-shadow:0 0 10px #22d3ee;
+}
+
+.save-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:25px;
+background:linear-gradient(90deg,#22d3ee,#9333ea);
+color:white;
+font-weight:600;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.save-btn:hover{
+transform:scale(1.03);
+box-shadow:0 0 15px rgba(147,51,234,0.6);
+}
+
+</style>
+
+<div class="profile-wrapper">
+
+<div class="profile-card">
+
+<h2>Profile Setup</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Username</label> <input type="text" name="username" value="{{ request.user.username }}">
+
+<label>Email</label> <input type="email" name="email" value="{{ request.user.email }}">
+
+<label>Choose Your Role</label> <select name="role">
+
+<option value="freelancer"
+{% if profile.role == "freelancer" %}selected{% endif %}>
+Freelancer
+</option>
+
+<option value="client"
+{% if profile.role == "client" %}selected{% endif %}>
+Client
+</option>
+
+</select>
+
+<button type="submit" class="save-btn">
+Save & Continue
+</button>
+
+</form>
+
 </div>
+
+</div>
+
 {% endblock %}

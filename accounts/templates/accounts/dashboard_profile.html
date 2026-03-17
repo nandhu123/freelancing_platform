@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Profile{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+">
+
+⬅ 
+
+</a>
+
+
+<style>
+
+.profile-page{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:50px;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+min-height:100vh;
+color:white;
+}
+
+.profile-card{
+width:800px;
+background:#1e293b;
+padding:40px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.5);
+}
+
+.profile-header{
+display:flex;
+align-items:center;
+gap:25px;
+margin-bottom:30px;
+}
+
+.avatar{
+width:90px;
+height:90px;
+border-radius:50%;
+background:linear-gradient(135deg,#22d3ee,#6366f1);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:bold;
+color:white;
+}
+
+.profile-header h2{
+margin:0;
+}
+
+.stats{
+display:flex;
+gap:20px;
+margin:25px 0;
+}
+
+.stat-box{
+flex:1;
+background:#0f172a;
+padding:15px;
+border-radius:12px;
+text-align:center;
+}
+
+.stat-box h3{
+margin:0;
+}
+
+.form-section{
+margin-top:25px;
+}
+
+.form-group{
+margin-bottom:18px;
+}
+
+.form-group label{
+display:block;
+margin-bottom:6px;
+font-size:14px;
+opacity:0.8;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:none;
+background:#020617;
+color:white;
+}
+
+.form-group textarea{
+resize:none;
+height:80px;
+}
+
+.button-row{
+margin-top:25px;
+display:flex;
+gap:15px;
+}
+
+.save-btn{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(135deg,#22d3ee,#6366f1);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.edit-btn{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#334155;
+color:white;
+cursor:pointer;
+}
+
+</style>
+
+<div class="profile-page">
+
+<div class="profile-card">
+
+<!-- Profile Header -->
+
+<div class="profile-header">
+
+<div class="avatar">
+{{ request.user.username|first|upper }}
+</div>
+
+<div>
+<h2>{{ request.user.username }}</h2>
+<p>{{ request.user.email }}</p>
+<p>Role: {{ profile.role }}</p>
+</div>
+
+</div>
+
+<hr>
+
+<!-- Stats -->
+
+<div class="stats">
+
+<div class="stat-box">
+<h3>{{ jobs_applied }}</h3>
+<p>Jobs Applied</p>
+</div>
+
+<div class="stat-box">
+<h3>{{ jobs_completed }}</h3>
+<p>Completed</p>
+</div>
+
+<div class="stat-box">
+<h3>4.8 ⭐</h3>
+<p>Rating</p>
+</div>
+
+</div>
+
+<!-- Profile Form -->
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="form-section">
+
+<div class="form-group">
+<label>Skills</label>
+<input type="text" name="skills" value="{{ profile.skills }}">
+</div>
+
+<div class="form-group">
+<label>Experience</label>
+<input type="text" name="experience" value="{{ profile.experience }}">
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input type="text" name="location" value="{{ profile.location }}">
+</div>
+
+<div class="form-group">
+<label>Bio</label>
+<textarea name="bio">{{ profile.bio }}</textarea>
+</div>
+
+</div>
+
+<div class="button-row">
+
+<button type="button" class="edit-btn">Edit</button>
+
+<button type="submit" class="save-btn">Save Changes</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

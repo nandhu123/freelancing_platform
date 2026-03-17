@@ -1,0 +1,84 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+">
+
+⬅ 
+
+</a>
+
+</div>
+
+<div style="padding:30px; color:white;">
+
+<h2 style="margin-bottom:20px;">📅 Project Schedule</h2>
+
+<div style="
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,255,255,0.2);
+">
+
+<table style="width:100%; border-collapse:collapse;">
+
+<thead>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.2);">
+<th style="padding:12px; text-align:left;">Project</th>
+<th style="padding:12px;">Client</th>
+<th style="padding:12px;">Meeting Date</th>
+<th style="padding:12px;">Time</th>
+<th style="padding:12px;">Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+<td style="padding:12px;">Website Development</td>
+<td style="padding:12px;">John Doe</td>
+<td style="padding:12px;">12 June 2026</td>
+<td style="padding:12px;">10:00 AM</td>
+<td style="padding:12px;">
+<span style="
+background:#22c55e;
+padding:6px 12px;
+border-radius:8px;">
+Confirmed
+</span>
+</td>
+</tr>
+
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+<td style="padding:12px;">Mobile App UI</td>
+<td style="padding:12px;">Sarah Smith</td>
+<td style="padding:12px;">15 June 2026</td>
+<td style="padding:12px;">2:30 PM</td>
+<td style="padding:12px;">
+<span style="
+background:#f59e0b;
+padding:6px 12px;
+border-radius:8px;">
+Pending
+</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %} 

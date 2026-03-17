@@ -1,11 +1,321 @@
-{% extends "base.html" %}
+{{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div style="text-align:center; margin-top:100px;">
-    <h1>Welcome to WorkNest</h1>
-    <p>Find the best freelance jobs or hire top talent!</p>
-    <a href="{% url 'login' %}">
-        <button style="padding:10px 20px;">Get Started</button>
-    </a>
+
+<style>
+
+/* PAGE BACKGROUND */
+
+.page{
+background: linear-gradient(135deg,#1f0036,#0f2027);
+color:white;
+min-height:100vh;
+font-family:sans-serif;
+}
+
+/* HERO */
+
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:100px 10%;
+flex-wrap:wrap;
+}
+
+.hero-text{
+max-width:520px;
+}
+
+.hero-text h1{
+font-size:48px;
+letter-spacing:2px;
+color:#00f5ff;
+margin-bottom:20px;
+}
+
+.hero-text p{
+font-size:18px;
+opacity:0.8;
+margin-bottom:30px;
+}
+
+.hero-buttons a{
+padding:15px 40px;
+border-radius:40px;
+background:linear-gradient(45deg,#00f5ff,#8e2de2);
+color:white;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+margin-right:10px;
+transition:0.3s;
+}
+
+.hero-buttons a:hover{
+transform:scale(1.1);
+}
+
+.hero img{
+width:420px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(0,255,255,0.4);
+}
+
+/* FEATURES */
+
+.features{
+padding:80px 10%;
+text-align:center;
+}
+
+.features h2{
+color:#00f5ff;
+margin-bottom:40px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:30px;
+}
+
+.feature-card{
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(20px);
+box-shadow:0 0 30px rgba(0,255,255,0.2);
+transition:0.3s;
+}
+
+.feature-card:hover{
+transform:translateY(-8px);
+}
+
+.feature-card h3{
+margin-bottom:10px;
+color:#00f5ff;
+}
+
+/* HOW IT WORKS */
+
+.steps{
+padding:80px 10%;
+text-align:center;
+}
+
+.steps h2{
+color:#00f5ff;
+margin-bottom:40px;
+}
+
+.steps-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+}
+
+.step{
+padding:25px;
+border-radius:18px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(20px);
+}
+
+/* ABOUT */
+
+.about{
+display:flex;
+align-items:center;
+gap:40px;
+padding:80px 10%;
+flex-wrap:wrap;
+}
+
+.about img{
+width:420px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(0,255,255,0.4);
+}
+
+.about-text h2{
+color:#00f5ff;
+margin-bottom:20px;
+}
+
+/* CTA */
+
+.cta{
+text-align:center;
+padding:80px 10%;
+}
+
+.cta a{
+padding:15px 40px;
+border-radius:40px;
+background:linear-gradient(45deg,#00f5ff,#8e2de2);
+color:white;
+text-decoration:none;
+font-weight:bold;
+font-size:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:25px;
+opacity:0.7;
+margin-top:40px;
+}
+
+</style>
+
+<div class="page">
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>NEXT GEN WORKSPACE</h1>
+
+<p>
+FreelanceHub connects talented freelancers with recruiters worldwide.
+Post jobs, hire experts, schedule interviews and manage projects easily.
+</p>
+
+<div class="hero-buttons">
+
+<a href="{% url 'register' %}">Get Started</a>
+
+<a href="{% url 'login' %}">Login</a>
+
 </div>
+
+</div>
+
+<img src="https://images.unsplash.com/photo-1551434678-e076c223a692">
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+<h2>Platform Features</h2>
+
+<div class="feature-grid">
+
+<div class="feature-card">
+<h3>💼 Job Marketplace</h3>
+<p>Recruiters can post projects and hire skilled freelancers easily.</p>
+</div>
+
+<div class="feature-card">
+<h3>📅 Interview Scheduling</h3>
+<p>Schedule interviews directly within the platform.</p>
+</div>
+
+<div class="feature-card">
+<h3>📊 Smart Dashboard</h3>
+<p>Track job applications, projects and interviews in one place.</p>
+</div>
+
+<div class="feature-card">
+<h3>🔔 Notifications</h3>
+<p>Receive instant updates when recruiters respond to your applications.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="steps">
+
+<h2>How FreelanceHub Works</h2>
+
+<div class="steps-grid">
+
+<div class="step">
+<h3>1️⃣ Create Account</h3>
+<p>Sign up as freelancer or recruiter.</p>
+</div>
+
+<div class="step">
+<h3>2️⃣ Post or Find Jobs</h3>
+<p>Recruiters post projects while freelancers explore jobs.</p>
+</div>
+
+<div class="step">
+<h3>3️⃣ Apply & Connect</h3>
+<p>Freelancers apply for jobs and communicate with recruiters.</p>
+</div>
+
+<div class="step">
+<h3>4️⃣ Schedule Interview</h3>
+<p>Recruiters schedule interviews and hire candidates.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="about">
+
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
+
+<div class="about-text">
+
+<h2>About FreelanceHub</h2>
+
+<p>
+FreelanceHub is a modern freelancing platform built using Django.
+It helps recruiters hire talented freelancers while giving freelancers
+opportunities to work on exciting projects worldwide.
+</p>
+
+<p>
+The platform provides dashboards, job applications, interview scheduling,
+notifications and messaging features to simplify hiring.
+</p>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta">
+
+<h2 style="margin-bottom:20px;">Start Your Freelancing Journey Today</h2>
+
+<a href="{% url 'register' %}">
+Join FreelanceHub
+</a>
+
+</section>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<p>© 2026 FreelanceHub</p>
+<p>Built with Django</p>
+
+</div>
+
+</div>
+
 {% endblock %}

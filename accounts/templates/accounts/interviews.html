@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block title %}My Interviews{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+">
+
+⬅ 
+
+</a>
+
+</div>
+
+<style>
+
+.page{
+min-height:100vh;
+padding:40px;
+color:white;
+background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+}
+
+/* HEADER */
+
+.header{
+margin-bottom:30px;
+}
+
+.header h1{
+color:#22d3ee;
+}
+
+/* STATS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:40px;
+}
+
+.stat-card{
+padding:20px;
+border-radius:16px;
+font-weight:600;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.stat1{background:linear-gradient(135deg,#6366f1,#8b5cf6);}
+.stat2{background:linear-gradient(135deg,#10b981,#059669);}
+.stat3{background:linear-gradient(135deg,#f97316,#ef4444);}
+
+.stat-number{
+font-size:26px;
+margin-top:10px;
+}
+
+/* NEXT INTERVIEW */
+
+.next-interview{
+padding:25px;
+border-radius:20px;
+margin-bottom:40px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+box-shadow:0 8px 25px rgba(0,255,255,0.3);
+}
+
+/* INTERVIEW GRID */
+
+.interview-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.interview-card{
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+box-shadow:0 8px 25px rgba(0,255,255,0.2);
+transition:0.3s;
+}
+
+.interview-card:hover{
+transform:translateY(-6px);
+}
+
+.job-title{
+color:#38bdf8;
+font-size:18px;
+margin-bottom:10px;
+}
+
+.join-btn{
+margin-top:12px;
+display:inline-block;
+padding:8px 16px;
+border-radius:10px;
+background:linear-gradient(135deg,#06b6d4,#3b82f6);
+color:white;
+text-decoration:none;
+}
+
+/* TIPS */
+
+.tips{
+margin-top:50px;
+padding:25px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+box-shadow:0 8px 25px rgba(0,255,255,0.2);
+}
+
+</style>
+
+
+<div class="page">
+
+<!-- HEADER -->
+
+<div class="header">
+<h1>🎤 My Interviews</h1>
+<p>Track and join your scheduled interviews with recruiters.</p>
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat-card stat1">
+Upcoming Interviews
+<div class="stat-number">{{ interviews|length }}</div>
+</div>
+
+<div class="stat-card stat2">
+Completed
+<div class="stat-number">0</div>
+</div>
+
+<div class="stat-card stat3">
+Missed
+<div class="stat-number">0</div>
+</div>
+
+</div>
+
+
+<!-- NEXT INTERVIEW -->
+
+{% if interviews %}
+<div class="next-interview">
+
+<h2>Next Interview</h2>
+
+<p><strong>Job:</strong> {{ interviews.0.job.title }}</p>
+<p>📅 {{ interviews.0.interview_date|date:"M d, Y" }}</p>
+<p>⏰ {{ interviews.0.interview_date|time:"H:i" }}</p>
+<p>👤 Recruiter: {{ interviews.0.recruiter.username }}</p>
+
+<a href="{{ interviews.0.meeting_link }}" target="_blank" class="join-btn">
+Join Interview
+</a>
+
+</div>
+{% endif %}
+
+
+<!-- ALL INTERVIEWS -->
+
+<h2 style="margin-bottom:20px;color:#22d3ee;">All Scheduled Interviews</h2>
+
+{% if interviews %}
+
+<div class="interview-grid">
+
+{% for interview in interviews %}
+
+<div class="interview-card">
+
+<div class="job-title">{{ interview.job.title }}</div>
+
+<p>📅 {{ interview.interview_date|date:"M d, Y" }}</p>
+
+<p>⏰ {{ interview.interview_date|time:"H:i" }}</p>
+
+<p>👤 Recruiter: {{ interview.recruiter.username }}</p>
+
+<p>💼 Job Budget: ₹{{ interview.job.salary }}</p>
+
+<a href="{{ interview.meeting_link }}" target="_blank" class="join-btn">
+Join Interview
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<p>No interviews scheduled yet.</p>
+
+{% endif %}
+
+
+<!-- PREPARATION TIPS -->
+
+<div class="tips">
+
+<h2>💡 Interview Preparation Tips</h2>
+
+<ul style="margin-top:10px;opacity:0.9;line-height:1.8;">
+<li>Review the job description carefully before the interview.</li>
+<li>Prepare examples of your previous freelance work.</li>
+<li>Test your microphone and internet connection.</li>
+<li>Join the meeting at least 5 minutes early.</li>
+<li>Be confident and explain your skills clearly.</li>
+</ul>
+
+</div>
+
+</div>
+
+{% endblock %}

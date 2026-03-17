@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Find Jobs{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+">
+
+⬅ 
+
+</a>
+
+</div>
+
+
+<div style="padding:40px; max-width:1000px; margin:auto;">
+
+<!-- SEARCH -->
+<form method="GET" action="{% url 'find_jobs' %}" style="margin-bottom:30px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search jobs..." 
+    style="padding:12px; width:300px; border-radius:8px;">
+
+    <button type="submit" style="padding:12px 20px; border-radius:8px;">
+        Search
+    </button>
+</form>
+
+<!-- JOB LIST -->
+{% for job in jobs %}
+
+<div style="margin-bottom:20px; padding:20px; background:#1e293b; border-radius:10px;">
+    
+    <h3>{{ job.title }}</h3>
+    <p>{{ job.description }}</p>
+    <p>Salary: ₹{{ job.salary }}</p>
+    {% if job.id in applied_jobs %}
+<button disabled style="background:gray;">Applied</button>
+{% else %}
+
+    <form method="POST" action="{% url 'apply_job' job.id %}">
+        {% csrf_token %}
+
+        <button type="submit" style="
+        margin-top:10px;
+        padding:8px 16px;
+        border:none;
+        border-radius:6px;
+        background:#3b82f6;
+        color:white;
+        cursor:pointer;">
+        Apply Job
+        </button>
+
+    </form>
+
+</div>
+
+{% endif %}
+
+<p>No jobs found.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

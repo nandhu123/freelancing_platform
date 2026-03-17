@@ -1,0 +1,169 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block content %}
+<div style="margin-bottom:20px;">
+    <a href="{% url 'dashboard' %}" style="
+        text-decoration:none;
+        color:white;
+        font-size:18px;
+        padding:8px 12px;
+        border-radius:8px;
+        background:rgba(255,255,255,0.1);
+    ">
+        ⬅ 
+    </a>
+</div>
+
+<div style="padding:30px; color:white;">
+    <h2 style="margin-bottom:20px;">💬 Messages</h2>
+
+    <div style="display:flex; gap:20px;">
+
+        <!-- CONTACT LIST -->
+        <div style="
+            width:30%;
+            background:rgba(255,255,255,0.05);
+            padding:20px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(255,0,150,0.2);
+            max-height: 500px;
+            overflow-y: auto;
+        ">
+            <h3>Contacts</h3>
+            <div style="margin-top:20px;">
+                {% for contact in contacts %}
+                    <a href="?contact={{ contact.user.id }}" style="text-decoration:none;">
+                        <div style="
+                            padding:12px;
+                            border-radius:10px;
+                            margin-bottom:10px;
+                            background: {% if selected_contact and selected_contact.id == contact.user.id %}rgba(0,255,255,0.3){% else %}rgba(255,255,255,0.05){% endif %};
+                            color:white;
+                            cursor:pointer;
+                        ">
+                            {{ contact.user.username }}
+                            <div style="font-size:12px; color:#ccc;">
+                                {{ contact.role }} 
+                                {% if contact.last_message %}• {{ contact.last_message|truncatechars:20 }}{% endif %}
+                            </div>
+                        </div>
+                    </a>
+                {% empty %}
+                    <div style="color:#aaa; padding:10px;">No contacts available.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- CHAT AREA -->
+        <div style="
+            width:70%;
+            background:rgba(255,255,255,0.05);
+            padding:20px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(0,255,255,0.2);
+            display:flex;
+            flex-direction:column;
+            height:500px;
+        ">
+            <h3>
+                {% if selected_contact %}
+                    Chat with {{ selected_contact.user.username }}
+                {% else %}
+                    Welcome to Messages 💬
+                {% endif %}
+            </h3>
+
+            <div id="chat-box" style="
+                flex-grow:1;
+                overflow-y:auto;
+                margin-top:20px;
+                margin-bottom:20px;
+                display:flex;
+                flex-direction:column;
+                justify-content: {% if not selected_contact %}center{% else %}flex-start{% endif %};
+                align-items: center;
+                color:#aaa;
+            ">
+                {% if selected_contact %}
+                    {% for msg in messages %}
+                        <div style="
+                            background:{% if msg.sender == user %}#3b82f6{% else %}#22c55e{% endif %};
+                            padding:10px;
+                            border-radius:10px;
+                            margin-bottom:10px;
+                            width:60%;
+                            {% if msg.sender == user %}margin-left:auto;{% endif %}
+                        ">
+                            {{ msg.content }}
+                            <div style="font-size:10px; color:#fff; margin-top:2px; text-align:right;">
+                                {{ msg.timestamp|date:"H:i" }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if messages|length == 0 %}
+                        <div style="color:#aaa; margin-top:50px; text-align:center;">
+                            No messages yet. Start the conversation!
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div style="text-align:center; max-width:400px;">
+                        <div style="font-size:50px; margin-bottom:20px;">💬</div>
+                        <div style="margin-bottom:10px; font-size:18px;">
+                            Select a contact from the left to start chatting
+                        </div>
+                        <div style="font-size:12px; color:#ccc; margin-bottom:20px;">
+                            Your messages will appear here in real-time.
+                        </div>
+                        <div style="
+                            padding:15px;
+                            border-radius:15px;
+                            background:rgba(255,255,255,0.05);
+                            color:#fff;
+                            font-size:14px;
+                            box-shadow:0 0 15px rgba(0,255,255,0.2);
+                        ">
+                            📌 Tip: You can start a conversation by clicking on a contact.  
+                            Recent messages will appear automatically.
+                        </div>
+                        <div style="margin-top:20px; font-size:12px; color:#aaa;">
+                            You can scroll through contacts and check all your chats easily!
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if selected_contact %}
+            <form method="POST" style="display:flex; gap:10px;">
+                {% csrf_token %}
+                <input type="text" name="message" placeholder="Type a message..." required
+                style="
+                    flex-grow:1;
+                    padding:12px;
+                    border-radius:10px;
+                    border:none;
+                ">
+                <input type="hidden" name="receiver_id" value="{{ selected_contact.id }}">
+                <button type="submit" style="
+                    padding:12px 20px;
+                    border:none;
+                    border-radius:10px;
+                    background:#00f5ff;
+                    cursor:pointer;
+                    color:black;
+                    font-weight:600;
+                ">Send</button>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Auto-scroll to bottom when page loads
+const chatBox = document.getElementById('chat-box');
+if(chatBox){
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+{% endblock %}

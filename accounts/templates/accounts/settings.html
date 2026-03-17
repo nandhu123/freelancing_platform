@@ -1,0 +1,223 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block content %}
+
+<style>
+
+.settings-container{
+display:flex;
+gap:30px;
+color:white;
+}
+
+/* LEFT MENU */
+
+.settings-menu{
+width:220px;
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,255,255,0.2);
+height:fit-content;
+}
+
+.settings-menu h3{
+margin-bottom:15px;
+color:#00f5ff;
+}
+
+.settings-menu button{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+background:rgba(255,255,255,0.08);
+color:white;
+cursor:pointer;
+text-align:left;
+}
+
+.settings-menu button:hover{
+background:rgba(0,255,255,0.2);
+}
+
+/* RIGHT AREA */
+
+.settings-content{
+flex:1;
+}
+
+.settings-card{
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,255,255,0.2);
+}
+
+.settings-card input,
+.settings-card textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+}
+
+.settings-card button{
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:linear-gradient(45deg,#00f5ff,#8e2de2);
+color:white;
+cursor:pointer;
+}
+
+/* hide cards */
+
+.hidden{
+display:none;
+}
+
+</style>
+
+<div style="margin-bottom:20px;">
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);">
+⬅ Back
+</a>
+</div>
+
+<div class="settings-container">
+
+<!-- LEFT MENU -->
+
+<div class="settings-menu">
+
+<h3>⚙ Settings</h3>
+
+<button onclick="showSection('profile')">👤 Profile</button>
+
+<button onclick="showSection('freelancer')">🎯 Freelancer Dashboard</button>
+
+<button onclick="showSection('recruiter')">🏢 Recruiter Dashboard</button>
+
+</div>
+
+<!-- RIGHT CONTENT -->
+
+<div class="settings-content">
+
+<!-- PROFILE -->
+
+<div id="profile" class="settings-card">
+
+<h3>👤 Profile Information</h3>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Username</label> <input type="text" name="username" value="{{ request.user.username }}">
+
+<label>Email</label> <input type="email" name="email" value="{{ request.user.email }}">
+
+<label>Bio</label>
+
+<textarea name="bio">{{ request.user.profile.bio }}</textarea>
+
+<button type="submit">Save Changes</button>
+
+</form>
+
+</div>
+<!-- PASSWORD -->
+
+<div class="settings-card" id="password">
+
+<h3>🔒 Change Password</h3>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Current Password</label> <input type="password" name="current_password">
+
+<label>New Password</label> <input type="password" name="new_password">
+
+<label>Confirm Password</label> <input type="password" name="confirm_password">
+
+<button type="submit">Update Password</button>
+
+</form>
+
+</div>
+
+<!-- FREELANCER SETTINGS -->
+
+<div id="freelancer" class="settings-card hidden">
+
+<h3>🎯 Freelancer Details</h3>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Experience (years)</label> <input type="number" name="experience" value="{{ request.user.profile.experience }}">
+
+<label>Completed Projects</label> <input type="number" name="completed_projects" value="{{ request.user.profile.completed_projects }}">
+
+<button type="submit">Update Freelancer Info</button>
+
+</form>
+
+</div>
+
+<!-- RECRUITER SETTINGS -->
+
+<div id="recruiter" class="settings-card hidden">
+
+<h3>🏢 Recruiter Details</h3>
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Company Name</label> <input type="text" name="company_name">
+
+<label>Company Website</label> <input type="text" name="company_website">
+
+<label>Company Description</label>
+
+<textarea name="company_description"></textarea>
+
+<button type="submit">Update Recruiter Info</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showSection(section){
+
+document.getElementById("profile").classList.add("hidden");
+document.getElementById("password").classList.add("hidden");
+document.getElementById("freelancer").classList.add("hidden");
+document.getElementById("recruiter").classList.add("hidden");
+
+document.getElementById(section).classList.remove("hidden");
+
+}
+
+</script>
+
+{% endblock %}

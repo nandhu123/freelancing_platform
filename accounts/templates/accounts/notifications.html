@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom:20px;">
+<a href="{% url 'dashboard' %}" style="
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:8px 12px;
+border-radius:8px;
+background:rgba(255,255,255,0.1);
+">
+⬅
+</a>
+</div>
+
+<style>
+
+.notification-page{
+min-height:100vh;
+padding:40px;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
+}
+
+/* Header */
+
+.notification-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.notification-container{
+max-width:800px;
+margin:auto;
+}
+
+/* Notification card */
+
+.notification-card{
+display:flex;
+align-items:center;
+gap:15px;
+background:#1e293b;
+padding:18px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.4);
+transition:0.2s;
+}
+
+.notification-card:hover{
+transform:translateY(-3px);
+}
+
+.notification-icon{
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#22d3ee;
+font-size:18px;
+}
+
+.notification-text{
+flex:1;
+}
+
+.notification-text p{
+margin:0;
+}
+
+.notification-time{
+font-size:12px;
+opacity:0.6;
+}
+
+.unread{
+border-left:4px solid #22d3ee;
+}
+
+.mark-btn{
+background:#334155;
+border:none;
+padding:6px 12px;
+border-radius:6px;
+color:white;
+cursor:pointer;
+font-size:12px;
+}
+
+.mark-btn:hover{
+background:#475569;
+}
+
+/* Empty notifications */
+
+.empty-notifications{
+text-align:center;
+padding:80px 30px;
+background:#1e293b;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.empty-icon{
+font-size:70px;
+margin-bottom:20px;
+}
+
+.empty-notifications h2{
+margin-bottom:10px;
+}
+
+.empty-notifications p{
+opacity:0.7;
+margin-bottom:25px;
+}
+
+.dashboard-btn{
+background:#22d3ee;
+color:#0f172a;
+padding:10px 20px;
+border-radius:8px;
+text-decoration:none;
+font-weight:600;
+}
+
+.dashboard-btn:hover{
+background:#06b6d4;
+}
+
+</style>
+
+<div class="notification-page">
+
+<div class="notification-header">
+<h1>🔔 Notifications</h1>
+<p>{{ unread_count }} Unread</p>
+</div>
+
+<div class="notification-container">
+
+{% for n in notifications %}
+
+<div class="notification-card {% if not n.is_read %}unread{% endif %}">
+
+<div class="notification-icon">
+🔔
+</div>
+
+<div class="notification-text">
+
+<p>{{ n.message }}</p>
+
+<span class="notification-time">
+{{ n.created_at|timesince }} ago
+</span>
+
+</div>
+
+<button class="mark-btn">
+Mark Read
+</button>
+
+</div>
+
+{% empty %}
+
+<div class="empty-notifications">
+
+<div class="empty-icon">🔔</div>
+
+<h2>No Notifications Yet</h2>
+
+<p>
+You’re all caught up!  
+When recruiters schedule interviews, approve applications,
+or send updates, they will appear here.
+</p>
+
+<a href="{% url 'dashboard' %}" class="dashboard-btn">
+Go to Dashboard
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}
